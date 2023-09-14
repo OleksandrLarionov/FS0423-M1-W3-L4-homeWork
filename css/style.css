@@ -1,0 +1,12 @@
+.container {
+	width: 900px;
+	margin: 30px auto;
+}
+
+.numberCell {
+	display: inline-block;
+}
+
+.peppa {
+	background-color: blueviolet;
+}
