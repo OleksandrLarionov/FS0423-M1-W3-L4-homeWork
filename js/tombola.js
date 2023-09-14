@@ -1,40 +1,45 @@
 const tabellone = document.getElementById("tabellone");
+const bottone = document.getElementById("btn");
 const arrayCells = [];
+const extractedNumbers = [];
 
 const numberCells = () => {
-	const arrayCells = Array.from(tabellone);
-	for (let i = 0; i < 76; i++) {
+	for (let i = 1; i <= 76; i++) {
 		arrayCells.push(i);
 	}
-	console.log(arrayCells);
+};
+numberCells();
 
-	tabellone.innerHTML = arrayCells
-		.map(
-			(numeri) => `<div class="numberCell">${numeri + 1}</div>
+const createCells = () => {
+	for (let i = 0; i < arrayCells.length; i++) {
+		const numeroCella = arrayCells[i];
+		const divCell = document.createElement("div");
+		divCell.classList.add("cella");
 
-`
-		)
-		.join("");
+		divCell.innerText = `${numeroCella}`;
+		tabellone.appendChild(divCell);
+	}
+};
+createCells();
 
-	const btn = document.getElementById("btn");
-	btn.addEventListener("click", (e) => {
-		console.log("premo il bottone");
-
-		const randomNumber = Math.floor(Math.random() * arrayCells.length);
-
-		for (let i = 0; i < arrayCells.length; i++) {
-			const backgroundCell =
-				tabellone.querySelectorAll(".numberCell")[randomNumber];
-
-			if (randomNumber === arrayCells[i - 1]) {
-				console.log(backgroundCell);
-				backgroundCell.classList.add("peppa");
-
-				console.log("coincide", arrayCells[i]);
-			}
-		}
-	});
-	console.log(arrayCells);
+const extractRandom = () => {
+	return (randomNumber = Math.floor(Math.random() * arrayCells.length));
 };
 
-numberCells();
+const colorCels = (number) => {
+	const myCell = document.getElementsByClassName("cella")[number];
+	if (myCell)
+		do {
+			myCell.classList.add("peppa");
+			myCell.classList.remove("cella");
+		} while (number === parseInt(myCell.innerText));
+};
+
+bottone.addEventListener("click", () => {
+	let randomNumber = extractRandom();
+	arrayCells.splice(arrayCells.indexOf(randomNumber), 1);
+	do {
+		colorCels(randomNumber);
+		extractedNumbers.push(randomNumber);
+	} while (!extractedNumbers.includes(randomNumber));
+});
